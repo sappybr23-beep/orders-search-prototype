@@ -1,0 +1,10 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="21" height="900" viewBox="0 0 21 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="corners" clip-path="url(#clip0_0_863)">
+<path id="Subtract" d="M21 0.625C9.16106 2.10128 0 12.2006 0 24.4395V876.439C0 888.126 8.353 897.86 19.4141 900H-56C-69.2548 900 -80 889.255 -80 876V24C-80 10.7452 -69.2548 2.0133e-07 -56 0H21V0.625Z" fill="white"/>
+</g>
+<defs>
+<clipPath id="clip0_0_863">
+<rect width="21" height="900" fill="white"/>
+</clipPath>
+</defs>
+</svg>

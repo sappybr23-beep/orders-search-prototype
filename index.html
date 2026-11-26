@@ -120,29 +120,27 @@ input { font: inherit; color: inherit; }
 .thead > :first-child { z-index: 3; }
 .row:hover > :first-child { background: var(--bg-hover); }
 .table-scroll.scrolled-x .grid > :first-child { box-shadow: 6px 0 10px -6px rgba(53,62,108,.18); }
-.hs { position: relative; width: 24px; height: 24px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; color: var(--hint); flex: none; margin-left: 2px; transition: background .15s, color .15s; }
-.hs .mask { width: 16px; height: 16px; --m: url(assets/search.svg); }
-.hs:hover { color: var(--accent); background: var(--bg-hover); }
-.hs.on, .hs[aria-expanded="true"] { color: var(--accent); background: var(--accent-soft); }
-.hs .n { position: absolute; top: -4px; right: -6px; min-width: 16px; height: 16px; padding: 0 4px; border-radius: 8px; background: var(--accent); color: #fff; font: 500 10px/16px var(--font); text-align: center; }
-.th .lbl-t { overflow: hidden; text-overflow: ellipsis; }
-.pop.hs-pop { width: 340px; padding: 16px; }
-.hs-title { font: 600 15px/20px var(--font); margin-bottom: 12px; }
-.hs-field { display: flex; align-items: center; gap: 8px; background: var(--input); border-radius: 12px; padding: 0 8px 0 14px; height: 44px; box-shadow: inset 0 0 0 1.5px var(--accent); }
-.hs-field.err { box-shadow: inset 0 0 0 1.5px var(--error); }
-.hs-field input { flex: 1; min-width: 0; border: 0; outline: none; background: transparent; font-size: 14px; color: var(--primary); }
-.hs-field input::placeholder { color: var(--secondary); }
-.hs-hint { margin-top: 8px; font-size: 12px; line-height: 16px; color: var(--secondary); }
-.hs-hint.err { color: var(--error); }
-.hs-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
-.hs-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--divider); font-size: 12px; color: var(--secondary); }
 kbd { display: inline-flex; align-items: center; height: 20px; padding: 0 6px; border-radius: 6px; background: var(--bg-container); box-shadow: inset 0 0 0 1px var(--divider), 0 1px 0 var(--divider); font: 500 11px/1 var(--font); color: var(--primary); }
 .enter-hint { display: none; align-items: center; gap: 6px; height: 32px; padding: 0 10px; border-radius: 10px; color: var(--secondary); font-size: 12px; white-space: nowrap; flex: none; align-self: flex-start; margin-top: 4px; }
 .enter-hint:hover { background: rgba(53,62,108,.06); color: var(--primary); }
 .enter-hint .mob { display: none; }
 .field.typing .enter-hint { display: inline-flex; }
 .thead { position: sticky; top: 0; z-index: 2; background: var(--bg-container); box-shadow: 0 4px 10px rgba(53,62,108,.04); }
-.th { height: 56px; display: flex; align-items: center; gap: 2px; padding: 0 8px; color: var(--secondary); white-space: nowrap; }
+.th { min-height: 56px; display: flex; align-items: center; gap: 2px; padding: 0 8px; color: var(--secondary); white-space: nowrap; }
+.th .lbl-t { overflow: hidden; text-overflow: ellipsis; }
+.th.col-search { cursor: text; transition: background .15s, color .15s; }
+.th.col-search:hover { background: var(--bg-hover); color: var(--primary); }
+.th .cnt { min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9px; background: var(--accent); color: #fff; font: 500 11px/18px var(--font); text-align: center; margin-left: 4px; flex: none; }
+.sort-btn { width: 24px; height: 24px; display: inline-flex; align-items: center; justify-content: center; border-radius: 6px; flex: none; cursor: pointer; }
+.sort-btn:hover { background: rgba(53,62,108,.06); }
+.th.editing { position: relative; flex-direction: column; align-items: stretch; justify-content: center; gap: 4px; padding-top: 12px; padding-bottom: 12px; padding-right: 36px; min-height: 84px; background: var(--bg-container); color: var(--secondary); cursor: text; }
+.th.editing:hover { background: var(--bg-container); }
+.th.editing .cap { font-size: 13px; line-height: 20px; overflow: hidden; text-overflow: ellipsis; }
+.th.editing .colin { display: flex; align-items: center; gap: 6px; min-width: 0; }
+.th.editing input { flex: 1; min-width: 0; border: 0; outline: none; background: transparent; padding: 0; font: 400 15px/24px var(--font); color: var(--primary); caret-color: var(--primary); }
+.th.editing .cerr { font-size: 11px; line-height: 14px; color: var(--error); white-space: normal; }
+.th.editing.err input { color: var(--error); }
+.th.editing .sort-btn, .th.editing .sort-ico { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); }
 .th:first-child, .td:first-child { padding-left: 16px; }
 .th.r { justify-content: flex-end; }
 .th.sortable { cursor: pointer; }
@@ -426,7 +424,7 @@ const S = {
   open:false, crit:"order", chips:[], text:"", focus:false, hint:null, selectedChip:-1,
   sort:{ key:null, dir:1 }, page:1, size:20, mobShown:20,
   f:{ period:"today", status:new Set(), sector:new Set(), regular:"all", pay:new Set() },
-  loading:false, delay:true, onboarded: store.get("orders-search-onboarded") === "1",
+  col:{ crit:null, text:"", err:"" }, loading:false, delay:true, onboarded: store.get("orders-search-onboarded") === "1",
 };
 let uid = 0, searchToken = 0;
 
@@ -616,10 +614,26 @@ function renderResults(){
   if (S.page > pages) S.page = pages;
   const from = (S.page - 1) * S.size, slice = list.slice(from, from + S.size);
   const sortTh = (key, label, cls = "") => `<div class="th sortable ${cls} ${S.sort.key === key ? "sorted" : ""}" data-sort="${key}" role="columnheader" tabindex="0" aria-sort="${S.sort.key === key ? (S.sort.dir > 0 ? "ascending" : "descending") : "none"}">${label}<img class="ico16 sort" src="assets/sort.svg" alt=""></div>`;
-  const hsBtn = crit => { const n = S.chips.filter(c => c.field === crit).length; return `<button class="hs ${n ? "on" : ""}" id="hs-${crit}" data-hs="${crit}" aria-haspopup="dialog" aria-expanded="${popFor === "hs:" + crit}" aria-label="Искать по столбцу «${esc(CRIT[crit].noun)}»" title="Поиск по столбцу"><span class="mask"></span>${n ? `<span class="n">${n}</span>` : ""}</button>`; };
-  const sth = (key, label, crit) => `<div class="th sortable ${S.sort.key === key ? "sorted" : ""}" data-sort="${key}" role="columnheader" tabindex="0" aria-sort="${S.sort.key === key ? (S.sort.dir > 0 ? "ascending" : "descending") : "none"}"><span class="lbl-t">${label}</span><img class="ico16 sort" src="assets/sort.svg" alt="">${crit ? hsBtn(crit) : ""}</div>`;
-  const pth = (label, crit, cls = "") => `<div class="th ${cls}" role="columnheader"><span class="lbl-t">${label}</span>${crit ? hsBtn(crit) : ""}</div>`;
-  const head = `<div class="grid thead" role="row">${sth("id","Номер заказа","order")}${sth("ts","Дата и время")}${pth("Сумма",null,"r")}${sth("status","Статус")}${pth("Номер в системе клиента","client")}${pth("№ договора","contract")}${pth("Электронная почта","email")}${pth("Номер телефона","phone")}${sth("sector","Сектор")}${pth("Описание","desc")}</div>`;
+  const ariaSort = key => S.sort.key === key ? (S.sort.dir > 0 ? "ascending" : "descending") : "none";
+  const colTh = (label, crit, sortKey) => {
+    const n = S.chips.filter(c => c.field === crit).length;
+    const sorted = sortKey && S.sort.key === sortKey;
+    const sortEl = sortKey ? `<button class="sort-btn" data-sort="${sortKey}" aria-label="Сортировать: ${esc(label)}" tabindex="-1"><img class="ico16 sort" src="assets/sort.svg" alt=""></button>` : "";
+    if (S.col.crit === crit) {
+      const c = CRIT[crit];
+      return `<div class="th editing col-search ${sorted ? "sorted" : ""} ${S.col.err ? "err" : ""}" data-col="${crit}" role="columnheader" aria-sort="${sortKey ? ariaSort(sortKey) : "none"}">
+        <span class="cap">${label}${n ? ` · ${n}` : ""}</span>
+        <div class="colin"><input id="colq" type="text" autocomplete="off" spellcheck="false" maxlength="200" enterkeyhint="search" aria-label="Поиск по столбцу «${esc(c.noun)}»"
+          inputmode="${crit === "phone" ? "tel" : crit === "order" ? "numeric" : crit === "email" ? "email" : "text"}" value="${esc(S.col.text)}"><kbd class="ek" title="Нажмите Enter, чтобы найти" ${S.col.text.trim() ? "" : "hidden"}>Enter</kbd></div>
+        ${S.col.err ? `<span class="cerr">${esc(S.col.err)}</span>` : ""}${sortEl}</div>`;
+    }
+    return `<div class="th col-search ${sorted ? "sorted" : ""}" data-col="${crit}" role="columnheader" tabindex="0" aria-sort="${sortKey ? ariaSort(sortKey) : "none"}" title="Нажмите, чтобы искать по столбцу"><span class="lbl-t">${label}</span>${n ? `<span class="cnt" aria-label="${n} в поиске">${n}</span>` : ""}${sortEl}</div>`;
+  };
+  const sth = (key, label) => `<div class="th sortable ${S.sort.key === key ? "sorted" : ""}" data-sort="${key}" role="columnheader" tabindex="0" aria-sort="${ariaSort(key)}"><span class="lbl-t">${label}</span><img class="ico16 sort" src="assets/sort.svg" alt=""></div>`;
+  const pth = (label, cls = "") => `<div class="th ${cls}" role="columnheader"><span class="lbl-t">${label}</span></div>`;
+  const colFocused = document.activeElement && document.activeElement.id === "colq";
+  const colCaret = colFocused ? document.activeElement.selectionStart : null;
+  const head = `<div class="grid thead" role="row">${colTh("Номер заказа","order","id")}${sth("ts","Дата и время")}${pth("Сумма","r")}${sth("status","Статус")}${colTh("Номер заказа в системе клиента","client")}${colTh("№ договора","contract")}${colTh("Электронная почта","email")}${colTh("Номер телефона","phone")}${sth("sector","Сектор")}${colTh("Описание","desc")}</div>`;
   let body;
   if (S.loading) {
     body = Array.from({ length: 8 }, () => `<div class="grid row">${[70,60,60,70,90,70,90,80,120,90].map((w,i) => `<div class="td ${i===2?"r":""}"><div class="sk" style="width:${w}%;margin-top:6px"></div>${i===1||i===8?`<div class="sk" style="width:${w-20}%;height:8px;margin-top:8px"></div>`:""}</div>`).join("")}</div>`).join("");
@@ -644,6 +658,7 @@ function renderResults(){
   const sc = $("#tableCard").querySelector(".table-scroll"); const st = sc ? sc.scrollLeft : 0;
   $("#tableCard").innerHTML = `<div class="table-scroll" role="table">${head}${body}</div>${foot}`;
   const nsc = $("#tableCard").querySelector(".table-scroll"); nsc.scrollLeft = st; nsc.classList.toggle("scrolled-x", st > 0);
+  if (colFocused) { const i = $("#colq"); if (i) { i.focus({ preventScroll: true }); try { i.setSelectionRange(colCaret, colCaret); } catch(e){} } }
 
   /* ----- cards ----- */
   let cards;
@@ -675,7 +690,7 @@ function focusInput(selectAll){ requestAnimationFrame(() => { const q = $("#q");
 
 /* ================= popovers ================= */
 let popFor = null, kbdIdx = -1, popAnchor = null;
-function closePop(){ const p = $("#pop"); p.hidden = true; p.className = "pop"; p.setAttribute("role","listbox"); p.style.minWidth = ""; popFor = null; hsErr = ""; document.querySelectorAll('[aria-expanded="true"]').forEach(b => { if (b.id !== "protoToggle") b.setAttribute("aria-expanded","false"); }); }
+function closePop(){ const p = $("#pop"); p.hidden = true; p.className = "pop"; p.setAttribute("role","listbox"); p.style.minWidth = ""; popFor = null; document.querySelectorAll('[aria-expanded="true"]').forEach(b => { if (b.id !== "protoToggle") b.setAttribute("aria-expanded","false"); }); }
 function placePop(anchor, extraClass){
   const p = $("#pop"); p.className = "pop " + (extraClass || ""); p.hidden = false; popAnchor = [anchor, extraClass];
   const r = anchor.getBoundingClientRect();
@@ -714,47 +729,32 @@ function openSizePop(btn){
   $("#pop").innerHTML = [10,20,50].map(n => `<button class="opt" data-size="${n}" aria-selected="${n === S.size}">${n}<svg class="check" viewBox="0 0 18 18" fill="none"><path d="M3.5 9.5l3.5 3.5 7.5-8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>`).join("");
   popFor = "size"; $("#pop").setAttribute("role","listbox"); placePop(btn); $("#pop").style.minWidth = "140px";
 }
-let hsErr = "";
-function openHsPop(btn, crit, keepText){
-  if (popFor === "hs:" + crit && !keepText) { closePop(); return; }
-  if (popFor) closePop();
-  popFor = "hs:" + crit; hsErr = "";
-  renderHsPop(crit, keepText || "");
-  document.querySelectorAll("[data-hs]").forEach(b => b.setAttribute("aria-expanded", b.dataset.hs === crit));
-  placePop(btn, "hs-pop");
-  requestAnimationFrame(() => { const i = $("#hsq"); if (i) { i.focus(); i.setSelectionRange(i.value.length, i.value.length); } });
+function startCol(crit){
+  if (S.col.crit === crit) return focusCol();
+  S.col = { crit, text:"", err:"" };
+  closePop(); renderResults(); focusCol();
 }
-function renderHsPop(crit, text){
-  const c = CRIT[crit], mine = S.chips.filter(x => x.field === crit);
-  $("#pop").setAttribute("role", "dialog");
-  $("#pop").innerHTML = `<div class="hs-title">Поиск по столбцу «${esc(c.noun)}»</div>
-    <div class="hs-field ${hsErr ? "err" : ""}"><input id="hsq" type="text" autocomplete="off" spellcheck="false" maxlength="200" enterkeyhint="search"
-      inputmode="${crit === "phone" ? "tel" : crit === "order" ? "numeric" : crit === "email" ? "email" : "text"}" placeholder="${esc(c.ph)}" value="${esc(text)}" aria-label="${esc(c.noun)}">
-      <button class="enter-hint" style="display:inline-flex;margin:0" data-hsgo tabindex="-1"><kbd>Enter</kbd></button></div>
-    <div class="hs-hint ${hsErr ? "err" : ""}" id="hsHint">${hsErr ? esc(hsErr) : `Нажмите <kbd>Enter</kbd>, чтобы найти. Несколько значений — через запятую`}</div>
-    ${mine.length ? `<div class="hs-chips">${mine.map(ch => `<span class="chip ${ch.valid ? "" : "invalid"}" title="${esc(ch.value)}"><span class="v">${esc(ch.value)}</span><button class="x" data-hsrm="${ch.id}" aria-label="Удалить ${esc(ch.value)}"><span class="mask"></span></button></span>`).join("")}</div>
-    <div class="hs-foot"><span>${mine.length} ${plural(mine.length,"значение","значения","значений")} в поиске</span><button class="link" data-hsclear="${crit}">Сбросить столбец</button></div>` : ""}`;
-}
-function hsCommit(){
-  const crit = popFor && popFor.startsWith("hs:") ? popFor.slice(3) : null; const i = $("#hsq"); if (!crit || !i) return;
+function exitCol(){ S.col = { crit:null, text:"", err:"" }; renderResults(); }
+function focusCol(){ requestAnimationFrame(() => { const i = $("#colq"); if (i) { i.focus({ preventScroll: true }); i.setSelectionRange(i.value.length, i.value.length); const th = i.closest(".th"); if (th) th.scrollIntoView({ block:"nearest", inline:"nearest" }); } }); }
+function colCommit(){
+  const crit = S.col.crit; if (!crit) return;
   const c = CRIT[crit];
-  const raws = splitRaw(i.value, crit).map(r => r.trim()).filter(Boolean);
-  if (!raws.length) { hsErr = "Введите значение"; renderHsPop(crit, ""); focusHs(); return; }
+  const raws = splitRaw(S.col.text, crit).map(r => r.trim()).filter(Boolean);
+  if (!raws.length) return;
   const bad = raws.filter(r => c.valid(c.norm(r)) !== true), good = raws.filter(r => c.valid(c.norm(r)) === true);
-  const dupCount = good.filter(r => S.chips.some(x => x.field === crit && x.value === c.norm(r))).length;
+  const allDup = good.length && good.every(r => S.chips.some(x => x.field === crit && x.value === c.norm(r)));
+  let err = "";
+  S.col.text = bad.join(", ");
   if (good.length) {
     if (!S.open) { S.open = true; dismissCoach(true); }
-    S.text = S.text || "";
     const r = addValues(good, crit);
-    hsErr = r.over ? `Можно добавить не больше ${LIMIT} значений` : "";
+    if (r.over) err = `Можно добавить не больше ${LIMIT} значений`;
+    else if (allDup) err = "Это значение уже в поиске";
   }
-  if (bad.length) hsErr = c.valid(c.norm(bad[0])) + (bad.length > 1 ? ` (ещё ${bad.length - 1})` : "");
-  else if (!good.length || (dupCount && dupCount === good.length)) hsErr = hsErr || "Это значение уже в поиске";
-  renderHsPop(crit, bad.join(", "));
-  const btn = document.getElementById("hs-" + crit); if (btn) { btn.setAttribute("aria-expanded","true"); placePop(btn, "hs-pop"); }
-  focusHs();
+  if (bad.length) err = c.valid(c.norm(bad[0])) + (bad.length > 1 ? ` (ещё ${bad.length - 1})` : "");
+  S.col.err = err;
+  renderResults(); focusCol();
 }
-function focusHs(){ requestAnimationFrame(() => { const i = $("#hsq"); if (i) { i.focus(); i.setSelectionRange(i.value.length, i.value.length); } }); }
 function markKbd(){ document.querySelectorAll("#pop .opt").forEach((o,i) => o.classList.toggle("kbd", i === kbdIdx)); }
 function setCrit(k){
   S.crit = k; closePop();
@@ -788,11 +788,6 @@ document.addEventListener("click", e => {
   const t = e.target;
   const act = t.closest("[data-act]");
   if (t.closest("#pop")) {
-    if (t.closest("[data-hsgo]")) return hsCommit();
-    const hr = t.closest("[data-hsrm]");
-    if (hr) { const crit = popFor.slice(3), keep = $("#hsq") ? $("#hsq").value : ""; S.chips = S.chips.filter(c => c.id !== +hr.dataset.hsrm); S.hint = null; render(); runSearch(); hsErr = ""; renderHsPop(crit, keep); const b = document.getElementById("hs-" + crit); if (b) placePop(b, "hs-pop"); focusHs(); return; }
-    const hc = t.closest("[data-hsclear]");
-    if (hc) { const crit = hc.dataset.hsclear; S.chips = S.chips.filter(c => c.field !== crit); S.hint = null; render(); runSearch(); renderHsPop(crit, ""); focusHs(); return; }
     const o = t.closest("[data-crit]"); if (o) return setCrit(o.dataset.crit);
     const sz = t.closest("[data-size]"); if (sz) { S.size = +sz.dataset.size; S.page = 1; closePop(); return renderResults(); }
     const fv = t.closest("[data-fval]");
@@ -818,8 +813,9 @@ document.addEventListener("click", e => {
   const fb = t.closest("[data-filter]"); if (fb) return openFilterPop(fb, fb.dataset.filter);
   if (t.closest("#sizeBtn")) return openSizePop(t.closest("#sizeBtn"));
   const pg = t.closest("[data-page]"); if (pg && !pg.disabled) { S.page = +pg.dataset.page; renderResults(); $("#tableCard .table-scroll").scrollTop = 0; return; }
-  const hsb = t.closest("[data-hs]"); if (hsb) { e.stopPropagation(); return openHsPop(hsb, hsb.dataset.hs); }
   const so = t.closest("[data-sort]"); if (so) return toggleSort(so.dataset.sort);
+  const colTh = t.closest("[data-col]");
+  if (colTh) { if (!colTh.classList.contains("editing")) startCol(colTh.dataset.col); else focusCol(); return; }
   const ord = t.closest("[data-order]"); if (ord) { e.preventDefault(); return toast(`Откроется карточка заказа ${ord.dataset.order}`); }
   if (popFor) closePop();
   if (act) {
@@ -838,12 +834,23 @@ document.addEventListener("click", e => {
   if (t.closest("#field") && !t.closest("button")) focusInput();
   if (S.selectedChip >= 0 && !t.closest("#field")) { S.selectedChip = -1; renderTop(); }
 });
+document.addEventListener("click", e => {
+  if (S.col.crit && !S.col.text.trim() && !e.target.closest(".th.editing, [data-col]")) exitCol();
+});
+document.addEventListener("focusout", e => {
+  if (e.target.id !== "colq") return;
+  setTimeout(() => { const a = document.activeElement; if (S.col.crit && !S.col.text.trim() && !(a && a.id === "colq") && !pointerDown) exitCol(); }, 0);
+});
+let pointerDown = false;
+document.addEventListener("pointerdown", () => pointerDown = true, true);
+document.addEventListener("pointerup", () => setTimeout(() => pointerDown = false, 0), true);
 document.addEventListener("keydown", e => {
-  if (e.target.id === "hsq") {
-    if (e.key === "Enter") { e.preventDefault(); return hsCommit(); }
-    if (e.key === "Escape") { e.preventDefault(); const crit = popFor.slice(3); closePop(); const b = document.getElementById("hs-" + crit); if (b) b.focus(); return; }
+  if (e.target.id === "colq") {
+    if (e.key === "Enter") { e.preventDefault(); return colCommit(); }
+    if (e.key === "Escape") { e.preventDefault(); e.stopPropagation(); if (S.col.text) { S.col.text = ""; S.col.err = ""; renderResults(); focusCol(); } else { const c = S.col.crit; exitCol(); const th = document.querySelector(`[data-col="${c}"]`); if (th) th.focus(); } return; }
     return;
   }
+  if (e.key === "Enter" && e.target.matches("[data-col]")) { e.preventDefault(); return startCol(e.target.dataset.col); }
   if (e.key === "Enter" && e.target.matches("[data-sort]")) return toggleSort(e.target.dataset.sort);
   if (popFor === "crit" && ["ArrowDown","ArrowUp","Enter","Escape","Tab"].includes(e.key) && (e.target.id === "critBtn" || e.target.id === "q" || e.target.closest("#pop"))) {
     if (e.key === "ArrowDown") { kbdIdx = (kbdIdx + 1) % CRIT_ORDER.length; markKbd(); e.preventDefault(); return; }
@@ -877,10 +884,12 @@ document.addEventListener("keydown", e => {
   if (S.selectedChip >= 0 && e.key.length === 1) { S.selectedChip = -1; renderTop(); $("#q").focus(); }
 });
 document.addEventListener("input", e => {
-  if (e.target.id === "hsq") {
-    const crit = popFor.slice(3), i = e.target;
-    if (crit === "phone" && /^[\d\s()+\-]*$/.test(i.value) && i.selectionStart === i.value.length && !(e.inputType || "").startsWith("delete")) i.value = fmtPhoneTyping(i.value);
-    if (hsErr) { hsErr = ""; $(".hs-field").classList.remove("err"); const h = $("#hsHint"); h.classList.remove("err"); h.innerHTML = "Нажмите <kbd>Enter</kbd>, чтобы найти. Несколько значений — через запятую"; }
+  if (e.target.id === "colq") {
+    const i = e.target;
+    if (S.col.crit === "phone" && /^[\d\s()+\-]*$/.test(i.value) && i.selectionStart === i.value.length && !(e.inputType || "").startsWith("delete")) i.value = fmtPhoneTyping(i.value);
+    S.col.text = i.value;
+    const th = i.closest(".th"); th.querySelector(".ek").hidden = !i.value.trim();
+    if (S.col.err) { S.col.err = ""; th.classList.remove("err"); const ce = th.querySelector(".cerr"); if (ce) ce.remove(); }
     return;
   }
   if (e.target.id !== "q") return;
@@ -926,7 +935,6 @@ addEventListener("scroll", () => { positionCoach(); }, { passive: true });
 document.addEventListener("scroll", e => {
   if (!e.target.classList || !e.target.classList.contains("table-scroll")) return;
   e.target.classList.toggle("scrolled-x", e.target.scrollLeft > 0);
-  if (popFor && popFor.startsWith("hs:") && popAnchor) { const b = document.getElementById("hs-" + popFor.slice(3)); if (b) placePop(b, "hs-pop"); }
 }, { capture: true, passive: true });
 
 function toggleSort(key){ S.sort = S.sort.key === key ? { key, dir: -S.sort.dir } : { key, dir: key === "ts" ? -1 : 1 }; renderResults(); }
@@ -936,7 +944,7 @@ function toast(msg){ const t = $("#toast"); t.textContent = msg; t.hidden = fals
 
 /* ================= scenarios ================= */
 function resetAll(){
-  closePop();
+  closePop(); S.col = { crit:null, text:"", err:"" };
   Object.assign(S, { open:false, crit:"order", chips:[], text:"", hint:null, selectedChip:-1, page:1, mobShown:20, sort:{ key:null, dir:1 },
     f:{ period:"today", status:new Set(), sector:new Set(), regular:"all", pay:new Set() } });
 }

@@ -115,7 +115,32 @@ input { font: inherit; color: inherit; }
 /* ---------- table ---------- */
 .table-card { flex: 1; min-height: 0; background: var(--bg-container); border-radius: 24px; display: flex; flex-direction: column; overflow: hidden; position: relative; }
 .table-scroll { flex: 1; min-height: 0; overflow: auto; }
-.grid { display: grid; grid-template-columns: minmax(130px,1fr) minmax(110px,1fr) minmax(110px,1fr) minmax(130px,1fr) minmax(130px,1fr) minmax(220px,2fr) minmax(140px,1fr); min-width: 1000px; }
+.grid { display: grid; grid-template-columns: minmax(180px,1fr) minmax(140px,.8fr) minmax(120px,.8fr) minmax(140px,.9fr) minmax(220px,1.2fr) minmax(160px,1fr) minmax(200px,1.3fr) minmax(180px,1fr) minmax(220px,1.5fr) minmax(170px,1.2fr); min-width: 1730px; }
+.grid > :first-child { position: sticky; left: 0; z-index: 1; background: var(--bg-container); }
+.thead > :first-child { z-index: 3; }
+.row:hover > :first-child { background: var(--bg-hover); }
+.table-scroll.scrolled-x .grid > :first-child { box-shadow: 6px 0 10px -6px rgba(53,62,108,.18); }
+.hs { position: relative; width: 24px; height: 24px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; color: var(--hint); flex: none; margin-left: 2px; transition: background .15s, color .15s; }
+.hs .mask { width: 16px; height: 16px; --m: url(data:image/svg+xml;base64,PHN2ZyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyIgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxnIGlkPSJJY29uL00vU2VhcmNoIj4KPHBhdGggaWQ9IlVuaW9uIiBkPSJNMTEuNTU1NyAzQzE2LjI4MDcgMy4wMDAwNiAyMC4xMTEzIDYuODMwNiAyMC4xMTEzIDExLjU1NTdDMjAuMTExMyAxMy41NTc3IDE5LjQyMDYgMTUuMzk3IDE4LjI2ODYgMTYuODU0NUwyMC43MDcgMTkuMjkzQzIxLjA5NzUgMTkuNjgzNSAyMS4wOTc2IDIwLjMxNjUgMjAuNzA3IDIwLjcwN0MyMC4zMTY1IDIxLjA5NzUgMTkuNjgzNSAyMS4wOTc2IDE5LjI5MyAyMC43MDdMMTYuODU0NSAxOC4yNjg2QzE1LjM5NyAxOS40MjA2IDEzLjU1NzcgMjAuMTExMyAxMS41NTU3IDIwLjExMTNDNi44MzA2IDIwLjExMTMgMy4wMDAwNiAxNi4yODA3IDMgMTEuNTU1N0MzIDYuODMwNTYgNi44MzA1NiAzIDExLjU1NTcgM1pNMTEuNTU1NyA1QzcuOTM1MTMgNSA1IDcuOTM1MTMgNSAxMS41NTU3QzUuMDAwMDYgMTUuMTc2MSA3LjkzNTE3IDE4LjExMTMgMTEuNTU1NyAxOC4xMTEzQzEzLjMxNzcgMTguMTExMyAxNC45MTU4IDE3LjQxNDMgMTYuMDkzOCAxNi4yODMyQzE2LjEyMDYgMTYuMjQ4IDE2LjE0OTUgMTYuMjEzOCAxNi4xODE2IDE2LjE4MTZDMTYuMjEzOCAxNi4xNDk1IDE2LjI0ODEgMTYuMTIwNiAxNi4yODMyIDE2LjA5MzhDMTcuNDE0MyAxNC45MTU4IDE4LjExMTMgMTMuMzE3NyAxOC4xMTEzIDExLjU1NTdDMTguMTExMyA3LjkzNTE3IDE1LjE3NjEgNS4wMDAwNiAxMS41NTU3IDVaIiBmaWxsPSIjNTQ3M0U4Ii8+CjwvZz4KPC9zdmc+Cg==); }
+.hs:hover { color: var(--accent); background: var(--bg-hover); }
+.hs.on, .hs[aria-expanded="true"] { color: var(--accent); background: var(--accent-soft); }
+.hs .n { position: absolute; top: -4px; right: -6px; min-width: 16px; height: 16px; padding: 0 4px; border-radius: 8px; background: var(--accent); color: #fff; font: 500 10px/16px var(--font); text-align: center; }
+.th .lbl-t { overflow: hidden; text-overflow: ellipsis; }
+.pop.hs-pop { width: 340px; padding: 16px; }
+.hs-title { font: 600 15px/20px var(--font); margin-bottom: 12px; }
+.hs-field { display: flex; align-items: center; gap: 8px; background: var(--input); border-radius: 12px; padding: 0 8px 0 14px; height: 44px; box-shadow: inset 0 0 0 1.5px var(--accent); }
+.hs-field.err { box-shadow: inset 0 0 0 1.5px var(--error); }
+.hs-field input { flex: 1; min-width: 0; border: 0; outline: none; background: transparent; font-size: 14px; color: var(--primary); }
+.hs-field input::placeholder { color: var(--secondary); }
+.hs-hint { margin-top: 8px; font-size: 12px; line-height: 16px; color: var(--secondary); }
+.hs-hint.err { color: var(--error); }
+.hs-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.hs-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--divider); font-size: 12px; color: var(--secondary); }
+kbd { display: inline-flex; align-items: center; height: 20px; padding: 0 6px; border-radius: 6px; background: var(--bg-container); box-shadow: inset 0 0 0 1px var(--divider), 0 1px 0 var(--divider); font: 500 11px/1 var(--font); color: var(--primary); }
+.enter-hint { display: none; align-items: center; gap: 6px; height: 32px; padding: 0 10px; border-radius: 10px; color: var(--secondary); font-size: 12px; white-space: nowrap; flex: none; align-self: flex-start; margin-top: 4px; }
+.enter-hint:hover { background: rgba(53,62,108,.06); color: var(--primary); }
+.enter-hint .mob { display: none; }
+.field.typing .enter-hint { display: inline-flex; }
 .thead { position: sticky; top: 0; z-index: 2; background: var(--bg-container); box-shadow: 0 4px 10px rgba(53,62,108,.04); }
 .th { height: 56px; display: flex; align-items: center; gap: 2px; padding: 0 8px; color: var(--secondary); white-space: nowrap; }
 .th:first-child, .td:first-child { padding-left: 16px; }
@@ -217,6 +242,9 @@ mark { background: rgba(84,115,232,.16); color: inherit; border-radius: 3px; pad
   .field { min-height: 52px; padding: 6px 8px 6px 16px; }
   .field input { font-size: 13px; height: 40px; }
   .clear-btn { margin-top: 4px; }
+  .enter-hint { padding: 0 8px; }
+  .enter-hint kbd, .enter-hint .desk { display: none; }
+  .enter-hint .mob { display: inline; color: var(--accent); font-weight: 600; font-size: 13px; }
   .pop.crit-pop { min-width: 0; }
   .hint { padding: 0 8px; }
   .table-card { display: none; }
@@ -345,7 +373,7 @@ const CRIT = {
               match:(o,v)=>o.id.includes(v), hl:"id" },
   contract: { menu:"№ договора", label:"№ договора", noun:"Номер договора", ph:"Введите номер договора", spaceSplit:true,
               norm:v=>v.trim(), valid:v=>/^[\p{L}\d\-\/._]{1,40}$/u.test(v) || "Номер договора: буквы, цифры и символы - / . _",
-              match:(o,v)=>o.contract.toLowerCase().includes(v.toLowerCase()), extra:"contract", extraLabel:"Договор" },
+              match:(o,v)=>o.contract.toLowerCase().includes(v.toLowerCase()), hl:"contract", extra:"contract", extraLabel:"Договор" },
   client:   { menu:"№ заказа в системе клиента", label:"№ заказа в системе клиента", noun:"Номер в системе клиента", ph:"Введите номер заказа в системе клиента", spaceSplit:true,
               norm:v=>v.trim(), valid:v=>(v.length<=64 && !/\s/.test(v)) || "Номер в системе клиента — без пробелов, до 64 знаков",
               match:(o,v)=>o.sys.toLowerCase().includes(v.toLowerCase()), hl:"sys" },
@@ -354,10 +382,10 @@ const CRIT = {
               match:(o,v)=>o.desc.toLowerCase().includes(v.toLowerCase()), hl:"desc" },
   email:    { menu:"Электронной почте", label:"Электронной почте", noun:"Электронная почта", ph:"Введите электронную почту", spaceSplit:true,
               norm:v=>v.trim().toLowerCase(), valid:v=>/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v) || "Неверный формат почты, пример: name@mail.ru",
-              match:(o,v)=>o.email.toLowerCase()===v, extra:"email", extraLabel:"Почта" },
+              match:(o,v)=>o.email.toLowerCase()===v, hl:"email", extra:"email", extraLabel:"Почта" },
   phone:    { menu:"Номеру телефона", label:"Номеру телефона", noun:"Номер телефона", ph:"+7 (___) ___-__-__", spaceSplit:false,
               norm:normPhone, valid:v=>/^\+7\d{10}$/.test(v) || "Неверный номер телефона, нужно 11 цифр: +7 999 123-45-67",
-              match:(o,v)=>o.phone===v, extra:"phone", extraLabel:"Телефон" },
+              match:(o,v)=>o.phone===v, hl:"phone", extra:"phone", extraLabel:"Телефон" },
 };
 const CRIT_ORDER = ["order","contract","client","desc","email","phone"];
 const LIMIT = 20;
@@ -439,17 +467,17 @@ function hiddenByFilters(){
 }
 function filtersActive(){ return S.f.period !== "today" || S.f.status.size || S.f.sector.size || S.f.pay.size || S.f.regular !== "all"; }
 
-function addValues(raws){
-  const c = CRIT[S.crit];
+function addValues(raws, field = S.crit){
+  const c = CRIT[field];
   let added = 0, dups = 0, over = 0, firstDup = null;
   for (let raw of raws) {
     raw = raw.trim(); if (!raw) continue;
     const value = c.norm(raw);
-    const exist = S.chips.find(x => x.field === S.crit && x.value === value);
+    const exist = S.chips.find(x => x.field === field && x.value === value);
     if (exist) { dups++; firstDup = firstDup || exist; continue; }
     if (S.chips.length >= LIMIT) { over++; continue; }
     const v = c.valid(value);
-    S.chips.push({ id:++uid, field:S.crit, value, valid:v === true, error:v === true ? "" : v });
+    S.chips.push({ id:++uid, field, value, valid:v === true, error:v === true ? "" : v });
     added++;
   }
   S.selectedChip = -1;
@@ -460,6 +488,7 @@ function addValues(raws){
   render();
   if (firstDup) requestAnimationFrame(() => { const el = document.querySelector(`.chip[data-id="${firstDup.id}"]`); if (el) { el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash"); } });
   if (added) runSearch();
+  return { added, dups, over };
 }
 function removeChip(id){ S.chips = S.chips.filter(c => c.id !== id); S.selectedChip = -1; S.hint = null; render(); runSearch(); focusInput(); }
 function editChip(id){
@@ -468,8 +497,8 @@ function editChip(id){
   S.text = ch.field === "phone" && ch.valid ? fmtPhoneTyping(ch.value) : ch.value; S.hint = null;
   render(); runSearch(); focusInput(true);
 }
-function splitRaw(text){
-  const re = CRIT[S.crit].spaceSplit ? /[,;\n\r\t ]+/ : /[,;\n\r\t]+/;
+function splitRaw(text, field = S.crit){
+  const re = CRIT[field].spaceSplit ? /[,;\n\r\t ]+/ : /[,;\n\r\t]+/;
   return text.split(re);
 }
 function runSearch(){
@@ -530,14 +559,15 @@ function renderTop(){
         <span class="lbl">Искать по</span>
         <button class="crit-btn" id="critBtn" aria-haspopup="listbox" aria-expanded="false">${esc(c.label)}<img class="ico16" src="data:image/svg+xml;base64,PHN2ZyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyIgd2lkdGg9IjE2IiBoZWlnaHQ9IjE2IiB2aWV3Qm94PSIwIDAgMTYgMTYiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxnIGlkPSJJY29ucy8xNi9TdHJva2UvY2hldnJvbi1kb3duIj4KPHBhdGggaWQ9Ikljb24iIGQ9Ik00LjUgNi41TDggMTBMMTEuNSA2LjUiIHN0cm9rZS13aWR0aD0iMS41IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZT0iIzdEODM5QiIvPgo8L2c+Cjwvc3ZnPgo=" alt=""></button>
       </div>
-      <div class="field ${S.focus ? "focus" : ""} ${hint && hint.err ? "has-error" : ""}" id="field">
+      <div class="field ${S.focus ? "focus" : ""} ${S.text.trim() ? "typing" : ""} ${hint && hint.err ? "has-error" : ""}" id="field">
         <div class="chips" id="chips">
           ${S.chips.map((ch, i) => `<span class="chip ${ch.valid ? "" : "invalid"} ${i === S.selectedChip ? "selected" : ""}" data-id="${ch.id}" title="${esc(CRIT[ch.field].noun + ": " + ch.value + (ch.valid ? "" : " — " + ch.error))}">
             <span class="v" data-edit="${ch.id}">${esc(ch.value)}</span><button class="x" data-rm="${ch.id}" aria-label="Удалить ${esc(ch.value)}"><span class="mask"></span></button></span>`).join("")}
           <input id="q" type="text" autocomplete="off" spellcheck="false" maxlength="200" aria-label="${esc(c.noun)}"
             ${c.ph ? `placeholder="${esc(atLimit ? "Достигнут лимит " + LIMIT + " значений" : S.chips.length ? "Добавить ещё" : c.ph)}"` : ""}
-            inputmode="${S.crit === "phone" ? "tel" : S.crit === "order" ? "numeric" : S.crit === "email" ? "email" : "text"}" value="${esc(S.text)}">
+            enterkeyhint="search" inputmode="${S.crit === "phone" ? "tel" : S.crit === "order" ? "numeric" : S.crit === "email" ? "email" : "text"}" value="${esc(S.text)}">
         </div>
+        <button class="enter-hint" data-act="commit" tabindex="-1" title="Нажмите Enter, чтобы найти"><kbd>Enter</kbd><span class="desk">чтобы найти</span><span class="mob">Найти</span></button>
         <button class="clear-btn" data-act="clear" aria-label="${S.chips.length || S.text ? "Очистить поиск" : "Закрыть поиск"}" title="${S.chips.length || S.text ? "Очистить" : "Закрыть поиск"}"><span class="mask"></span></button>
       </div>
     </div>
@@ -586,19 +616,25 @@ function renderResults(){
   if (S.page > pages) S.page = pages;
   const from = (S.page - 1) * S.size, slice = list.slice(from, from + S.size);
   const sortTh = (key, label, cls = "") => `<div class="th sortable ${cls} ${S.sort.key === key ? "sorted" : ""}" data-sort="${key}" role="columnheader" tabindex="0" aria-sort="${S.sort.key === key ? (S.sort.dir > 0 ? "ascending" : "descending") : "none"}">${label}<img class="ico16 sort" src="data:image/svg+xml;base64,PHN2ZyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyIgd2lkdGg9IjE2IiBoZWlnaHQ9IjE2IiB2aWV3Qm94PSIwIDAgMTYgMTYiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxnIGlkPSJJY29uL1MvU29ydCI+CjxwYXRoIGlkPSJWZWN0b3IiIGQ9Ik0xMS40NDQgMy45OTk5OEMxMS40NDQgMy42MzE3OSAxMS4xNDU1IDMuMzMzMzEgMTAuNzc3MyAzLjMzMzMxQzEwLjQwOTMgMy4zMzM1NSAxMC4xMTA3IDMuNjMxOTQgMTAuMTEwNyAzLjk5OTk4VjExLjI3OTNMOS4wMjY2OCAxMC4xOTUzTDguOTc1OSAxMC4xNDk3QzguNzE0MDUgOS45MzYyNiA4LjMyODAxIDkuOTUxMjYgOC4wODM5NyAxMC4xOTUzQzcuODQwMDQgMTAuNDM5MyA3LjgyNDk2IDEwLjgyNTQgOC4wMzg0IDExLjA4NzJMOC4wODM5NyAxMS4xMzhMMTAuMzA2IDEzLjM2QzEwLjQzMDkgMTMuNDg0OSAxMC42MDA3IDEzLjU1NTIgMTAuNzc3MyAxMy41NTUzQzEwLjk1NDEgMTMuNTU1MyAxMS4xMjM3IDEzLjQ4NSAxMS4yNDg3IDEzLjM2TDEzLjQ3MTMgMTEuMTM4QzEzLjczMTUgMTAuODc3NyAxMy43MzE1IDEwLjQ1NTYgMTMuNDcxMyAxMC4xOTUzQzEzLjIxMSA5LjkzNTA5IDEyLjc4OSA5LjkzNTA5IDEyLjUyODYgMTAuMTk1M0wxMS40NDQgMTEuMjc5M1YzLjk5OTk4WiIgZmlsbD0iI0I0QjhDQiIvPgo8cGF0aCBpZD0iVmVjdG9yXzIiIGQ9Ik01LjY5MzM2IDMuNTI4NDVDNS40NDkyNSAzLjI4NDQ2IDUuMDYzMjQgMy4yNjkyOCA0LjgwMTQzIDMuNDgyODhMNC43NTA2NSAzLjUyODQ1TDIuNTI4NjQgNS43NTA0NkMyLjI2ODMzIDYuMDEwNzcgMi4yNjg0IDYuNDMyODEgMi41Mjg2NCA2LjY5MzE2QzIuNzg5IDYuOTUzNDYgMy4yMTEwMiA2Ljk1MzUgMy40NzEzNSA2LjY5MzE2TDQuNTU1MzQgNS42MDkxOFYxMi44ODg1QzQuNTU1MzQgMTMuMjU2NiA0Ljg1MzkxIDEzLjU1NSA1LjIyMiAxMy41NTUxQzUuNTkwMTQgMTMuNTU1MSA1Ljg4ODY3IDEzLjI1NjYgNS44ODg2NyAxMi44ODg1VjUuNjA4NTNMNi45NzMzIDYuNjkzMTZMNy4wMjM0MyA2LjczOTM5QzcuMjg1MjggNi45NTI5NCA3LjY3MTk0IDYuOTM3MjQgNy45MTYwMSA2LjY5MzE2QzguMTU5ODIgNi40NDkwOCA4LjE3NTA1IDYuMDYyOTkgNy45NjE1OSA1LjgwMTI0TDcuOTE2MDEgNS43NTA0Nkw1LjY5MzM2IDMuNTI4NDVaIiBmaWxsPSIjQjRCOENCIi8+CjwvZz4KPC9zdmc+Cg==" alt=""></div>`;
-  const head = `<div class="grid thead" role="row">${sortTh("id","Номер заказа")}${sortTh("ts","Дата и время")}<div class="th r">Сумма</div>${sortTh("status","Статус")}<div class="th">Номер в системе</div>${sortTh("sector","Сектор")}<div class="th">Описание</div></div>`;
+  const hsBtn = crit => { const n = S.chips.filter(c => c.field === crit).length; return `<button class="hs ${n ? "on" : ""}" id="hs-${crit}" data-hs="${crit}" aria-haspopup="dialog" aria-expanded="${popFor === "hs:" + crit}" aria-label="Искать по столбцу «${esc(CRIT[crit].noun)}»" title="Поиск по столбцу"><span class="mask"></span>${n ? `<span class="n">${n}</span>` : ""}</button>`; };
+  const sth = (key, label, crit) => `<div class="th sortable ${S.sort.key === key ? "sorted" : ""}" data-sort="${key}" role="columnheader" tabindex="0" aria-sort="${S.sort.key === key ? (S.sort.dir > 0 ? "ascending" : "descending") : "none"}"><span class="lbl-t">${label}</span><img class="ico16 sort" src="data:image/svg+xml;base64,PHN2ZyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyIgd2lkdGg9IjE2IiBoZWlnaHQ9IjE2IiB2aWV3Qm94PSIwIDAgMTYgMTYiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxnIGlkPSJJY29uL1MvU29ydCI+CjxwYXRoIGlkPSJWZWN0b3IiIGQ9Ik0xMS40NDQgMy45OTk5OEMxMS40NDQgMy42MzE3OSAxMS4xNDU1IDMuMzMzMzEgMTAuNzc3MyAzLjMzMzMxQzEwLjQwOTMgMy4zMzM1NSAxMC4xMTA3IDMuNjMxOTQgMTAuMTEwNyAzLjk5OTk4VjExLjI3OTNMOS4wMjY2OCAxMC4xOTUzTDguOTc1OSAxMC4xNDk3QzguNzE0MDUgOS45MzYyNiA4LjMyODAxIDkuOTUxMjYgOC4wODM5NyAxMC4xOTUzQzcuODQwMDQgMTAuNDM5MyA3LjgyNDk2IDEwLjgyNTQgOC4wMzg0IDExLjA4NzJMOC4wODM5NyAxMS4xMzhMMTAuMzA2IDEzLjM2QzEwLjQzMDkgMTMuNDg0OSAxMC42MDA3IDEzLjU1NTIgMTAuNzc3MyAxMy41NTUzQzEwLjk1NDEgMTMuNTU1MyAxMS4xMjM3IDEzLjQ4NSAxMS4yNDg3IDEzLjM2TDEzLjQ3MTMgMTEuMTM4QzEzLjczMTUgMTAuODc3NyAxMy43MzE1IDEwLjQ1NTYgMTMuNDcxMyAxMC4xOTUzQzEzLjIxMSA5LjkzNTA5IDEyLjc4OSA5LjkzNTA5IDEyLjUyODYgMTAuMTk1M0wxMS40NDQgMTEuMjc5M1YzLjk5OTk4WiIgZmlsbD0iI0I0QjhDQiIvPgo8cGF0aCBpZD0iVmVjdG9yXzIiIGQ9Ik01LjY5MzM2IDMuNTI4NDVDNS40NDkyNSAzLjI4NDQ2IDUuMDYzMjQgMy4yNjkyOCA0LjgwMTQzIDMuNDgyODhMNC43NTA2NSAzLjUyODQ1TDIuNTI4NjQgNS43NTA0NkMyLjI2ODMzIDYuMDEwNzcgMi4yNjg0IDYuNDMyODEgMi41Mjg2NCA2LjY5MzE2QzIuNzg5IDYuOTUzNDYgMy4yMTEwMiA2Ljk1MzUgMy40NzEzNSA2LjY5MzE2TDQuNTU1MzQgNS42MDkxOFYxMi44ODg1QzQuNTU1MzQgMTMuMjU2NiA0Ljg1MzkxIDEzLjU1NSA1LjIyMiAxMy41NTUxQzUuNTkwMTQgMTMuNTU1MSA1Ljg4ODY3IDEzLjI1NjYgNS44ODg2NyAxMi44ODg1VjUuNjA4NTNMNi45NzMzIDYuNjkzMTZMNy4wMjM0MyA2LjczOTM5QzcuMjg1MjggNi45NTI5NCA3LjY3MTk0IDYuOTM3MjQgNy45MTYwMSA2LjY5MzE2QzguMTU5ODIgNi40NDkwOCA4LjE3NTA1IDYuMDYyOTkgNy45NjE1OSA1LjgwMTI0TDcuOTE2MDEgNS43NTA0Nkw1LjY5MzM2IDMuNTI4NDVaIiBmaWxsPSIjQjRCOENCIi8+CjwvZz4KPC9zdmc+Cg==" alt="">${crit ? hsBtn(crit) : ""}</div>`;
+  const pth = (label, crit, cls = "") => `<div class="th ${cls}" role="columnheader"><span class="lbl-t">${label}</span>${crit ? hsBtn(crit) : ""}</div>`;
+  const head = `<div class="grid thead" role="row">${sth("id","Номер заказа","order")}${sth("ts","Дата и время")}${pth("Сумма",null,"r")}${sth("status","Статус")}${pth("Номер в системе клиента","client")}${pth("№ договора","contract")}${pth("Электронная почта","email")}${pth("Номер телефона","phone")}${sth("sector","Сектор")}${pth("Описание","desc")}</div>`;
   let body;
   if (S.loading) {
-    body = Array.from({ length: 8 }, () => `<div class="grid row">${[70,60,60,70,90,120,90].map((w,i) => `<div class="td ${i===2?"r":""}"><div class="sk" style="width:${w}%;margin-top:6px"></div>${i===1||i===5?`<div class="sk" style="width:${w-20}%;height:8px;margin-top:8px"></div>`:""}</div>`).join("")}</div>`).join("");
+    body = Array.from({ length: 8 }, () => `<div class="grid row">${[70,60,60,70,90,70,90,80,120,90].map((w,i) => `<div class="td ${i===2?"r":""}"><div class="sk" style="width:${w}%;margin-top:6px"></div>${i===1||i===8?`<div class="sk" style="width:${w-20}%;height:8px;margin-top:8px"></div>`:""}</div>`).join("")}</div>`).join("");
   } else if (!total) body = emptyHTML();
-  else body = slice.map(o => { const ex = extraMatch(o); return `<div class="grid row" role="row">
-      <div class="td"><a class="idlink t" href="#" data-order="${o.id}" title="${o.id}">${hl(o.id,"id")}</a>${ex ? `<span class="s" title="${esc(ex.value)}">${ex.label}: <mark>${esc(ex.value)}</mark></span>` : ""}</div>
+  else body = slice.map(o => `<div class="grid row" role="row">
+      <div class="td"><a class="idlink t" href="#" data-order="${o.id}" title="${o.id}">${hl(o.id,"id")}</a></div>
       <div class="td"><span class="t">${o.time}</span><span class="s">${o.date}</span></div>
       <div class="td r"><span class="m">${money(o.amount)}</span></div>
       <div class="td"><span class="status ${stClass(o.status)}">${o.status}</span></div>
       <div class="td"><span class="t2" title="${esc(o.sys)}">${hl(o.sys,"sys")}</span></div>
+      <div class="td"><span class="t" title="${esc(o.contract)}">${hl(o.contract,"contract")}</span></div>
+      <div class="td"><span class="t" title="${esc(o.email)}">${hl(o.email,"email")}</span></div>
+      <div class="td"><span class="t" style="font-variant-numeric:tabular-nums">${hl(o.phone,"phone")}</span></div>
       <div class="td"><span class="t">${o.sector}</span><span class="s" title="${esc(o.merchant)}">${esc(o.merchant)}</span></div>
-      <div class="td"><span class="t2w" title="${esc(o.desc)}">${hl(o.desc,"desc")}</span></div></div>`; }).join("");
+      <div class="td"><span class="t2w" title="${esc(o.desc)}">${hl(o.desc,"desc")}</span></div></div>`).join("");
   const pagerBtns = [];
   const win = pages <= 7 ? [...Array(pages).keys()].map(i => i + 1) : [1, ...[S.page - 1, S.page, S.page + 1].filter(p => p > 1 && p < pages), pages];
   let prev = 0; for (const p of win) { if (p - prev > 1) pagerBtns.push(`<span>…</span>`); pagerBtns.push(`<button data-page="${p}" ${p === S.page ? 'aria-current="true"' : ""}>${p}</button>`); prev = p; }
@@ -607,7 +643,7 @@ function renderResults(){
       <div class="pager"><button data-page="${S.page - 1}" ${S.page === 1 ? "disabled" : ""} aria-label="Назад">‹</button>${pagerBtns.join("")}<button data-page="${S.page + 1}" ${S.page === pages ? "disabled" : ""} aria-label="Вперёд">›</button></div></div>` : "";
   const sc = $("#tableCard").querySelector(".table-scroll"); const st = sc ? sc.scrollLeft : 0;
   $("#tableCard").innerHTML = `<div class="table-scroll" role="table">${head}${body}</div>${foot}`;
-  $("#tableCard").querySelector(".table-scroll").scrollLeft = st;
+  const nsc = $("#tableCard").querySelector(".table-scroll"); nsc.scrollLeft = st; nsc.classList.toggle("scrolled-x", st > 0);
 
   /* ----- cards ----- */
   let cards;
@@ -639,7 +675,7 @@ function focusInput(selectAll){ requestAnimationFrame(() => { const q = $("#q");
 
 /* ================= popovers ================= */
 let popFor = null, kbdIdx = -1, popAnchor = null;
-function closePop(){ const p = $("#pop"); p.hidden = true; p.className = "pop"; popFor = null; document.querySelectorAll('[aria-expanded="true"]').forEach(b => { if (b.id !== "protoToggle") b.setAttribute("aria-expanded","false"); }); }
+function closePop(){ const p = $("#pop"); p.hidden = true; p.className = "pop"; p.setAttribute("role","listbox"); p.style.minWidth = ""; popFor = null; hsErr = ""; document.querySelectorAll('[aria-expanded="true"]').forEach(b => { if (b.id !== "protoToggle") b.setAttribute("aria-expanded","false"); }); }
 function placePop(anchor, extraClass){
   const p = $("#pop"); p.className = "pop " + (extraClass || ""); p.hidden = false; popAnchor = [anchor, extraClass];
   const r = anchor.getBoundingClientRect();
@@ -676,8 +712,49 @@ function openFilterPop(btn, key){
 function openSizePop(btn){
   if (popFor === "size") { closePop(); return; }
   $("#pop").innerHTML = [10,20,50].map(n => `<button class="opt" data-size="${n}" aria-selected="${n === S.size}">${n}<svg class="check" viewBox="0 0 18 18" fill="none"><path d="M3.5 9.5l3.5 3.5 7.5-8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>`).join("");
-  popFor = "size"; placePop(btn); $("#pop").style.minWidth = "140px";
+  popFor = "size"; $("#pop").setAttribute("role","listbox"); placePop(btn); $("#pop").style.minWidth = "140px";
 }
+let hsErr = "";
+function openHsPop(btn, crit, keepText){
+  if (popFor === "hs:" + crit && !keepText) { closePop(); return; }
+  if (popFor) closePop();
+  popFor = "hs:" + crit; hsErr = "";
+  renderHsPop(crit, keepText || "");
+  document.querySelectorAll("[data-hs]").forEach(b => b.setAttribute("aria-expanded", b.dataset.hs === crit));
+  placePop(btn, "hs-pop");
+  requestAnimationFrame(() => { const i = $("#hsq"); if (i) { i.focus(); i.setSelectionRange(i.value.length, i.value.length); } });
+}
+function renderHsPop(crit, text){
+  const c = CRIT[crit], mine = S.chips.filter(x => x.field === crit);
+  $("#pop").setAttribute("role", "dialog");
+  $("#pop").innerHTML = `<div class="hs-title">Поиск по столбцу «${esc(c.noun)}»</div>
+    <div class="hs-field ${hsErr ? "err" : ""}"><input id="hsq" type="text" autocomplete="off" spellcheck="false" maxlength="200" enterkeyhint="search"
+      inputmode="${crit === "phone" ? "tel" : crit === "order" ? "numeric" : crit === "email" ? "email" : "text"}" placeholder="${esc(c.ph)}" value="${esc(text)}" aria-label="${esc(c.noun)}">
+      <button class="enter-hint" style="display:inline-flex;margin:0" data-hsgo tabindex="-1"><kbd>Enter</kbd></button></div>
+    <div class="hs-hint ${hsErr ? "err" : ""}" id="hsHint">${hsErr ? esc(hsErr) : `Нажмите <kbd>Enter</kbd>, чтобы найти. Несколько значений — через запятую`}</div>
+    ${mine.length ? `<div class="hs-chips">${mine.map(ch => `<span class="chip ${ch.valid ? "" : "invalid"}" title="${esc(ch.value)}"><span class="v">${esc(ch.value)}</span><button class="x" data-hsrm="${ch.id}" aria-label="Удалить ${esc(ch.value)}"><span class="mask"></span></button></span>`).join("")}</div>
+    <div class="hs-foot"><span>${mine.length} ${plural(mine.length,"значение","значения","значений")} в поиске</span><button class="link" data-hsclear="${crit}">Сбросить столбец</button></div>` : ""}`;
+}
+function hsCommit(){
+  const crit = popFor && popFor.startsWith("hs:") ? popFor.slice(3) : null; const i = $("#hsq"); if (!crit || !i) return;
+  const c = CRIT[crit];
+  const raws = splitRaw(i.value, crit).map(r => r.trim()).filter(Boolean);
+  if (!raws.length) { hsErr = "Введите значение"; renderHsPop(crit, ""); focusHs(); return; }
+  const bad = raws.filter(r => c.valid(c.norm(r)) !== true), good = raws.filter(r => c.valid(c.norm(r)) === true);
+  const dupCount = good.filter(r => S.chips.some(x => x.field === crit && x.value === c.norm(r))).length;
+  if (good.length) {
+    if (!S.open) { S.open = true; dismissCoach(true); }
+    S.text = S.text || "";
+    const r = addValues(good, crit);
+    hsErr = r.over ? `Можно добавить не больше ${LIMIT} значений` : "";
+  }
+  if (bad.length) hsErr = c.valid(c.norm(bad[0])) + (bad.length > 1 ? ` (ещё ${bad.length - 1})` : "");
+  else if (!good.length || (dupCount && dupCount === good.length)) hsErr = hsErr || "Это значение уже в поиске";
+  renderHsPop(crit, bad.join(", "));
+  const btn = document.getElementById("hs-" + crit); if (btn) { btn.setAttribute("aria-expanded","true"); placePop(btn, "hs-pop"); }
+  focusHs();
+}
+function focusHs(){ requestAnimationFrame(() => { const i = $("#hsq"); if (i) { i.focus(); i.setSelectionRange(i.value.length, i.value.length); } }); }
 function markKbd(){ document.querySelectorAll("#pop .opt").forEach((o,i) => o.classList.toggle("kbd", i === kbdIdx)); }
 function setCrit(k){
   S.crit = k; closePop();
@@ -711,6 +788,11 @@ document.addEventListener("click", e => {
   const t = e.target;
   const act = t.closest("[data-act]");
   if (t.closest("#pop")) {
+    if (t.closest("[data-hsgo]")) return hsCommit();
+    const hr = t.closest("[data-hsrm]");
+    if (hr) { const crit = popFor.slice(3), keep = $("#hsq") ? $("#hsq").value : ""; S.chips = S.chips.filter(c => c.id !== +hr.dataset.hsrm); S.hint = null; render(); runSearch(); hsErr = ""; renderHsPop(crit, keep); const b = document.getElementById("hs-" + crit); if (b) placePop(b, "hs-pop"); focusHs(); return; }
+    const hc = t.closest("[data-hsclear]");
+    if (hc) { const crit = hc.dataset.hsclear; S.chips = S.chips.filter(c => c.field !== crit); S.hint = null; render(); runSearch(); renderHsPop(crit, ""); focusHs(); return; }
     const o = t.closest("[data-crit]"); if (o) return setCrit(o.dataset.crit);
     const sz = t.closest("[data-size]"); if (sz) { S.size = +sz.dataset.size; S.page = 1; closePop(); return renderResults(); }
     const fv = t.closest("[data-fval]");
@@ -736,6 +818,7 @@ document.addEventListener("click", e => {
   const fb = t.closest("[data-filter]"); if (fb) return openFilterPop(fb, fb.dataset.filter);
   if (t.closest("#sizeBtn")) return openSizePop(t.closest("#sizeBtn"));
   const pg = t.closest("[data-page]"); if (pg && !pg.disabled) { S.page = +pg.dataset.page; renderResults(); $("#tableCard .table-scroll").scrollTop = 0; return; }
+  const hsb = t.closest("[data-hs]"); if (hsb) { e.stopPropagation(); return openHsPop(hsb, hsb.dataset.hs); }
   const so = t.closest("[data-sort]"); if (so) return toggleSort(so.dataset.sort);
   const ord = t.closest("[data-order]"); if (ord) { e.preventDefault(); return toast(`Откроется карточка заказа ${ord.dataset.order}`); }
   if (popFor) closePop();
@@ -743,6 +826,7 @@ document.addEventListener("click", e => {
     const a = act.dataset.act;
     if (a === "open") { if (!S.onboarded) dismissCoach(true); return openSearch(); }
     if (a === "clear") return clearOrClose();
+    if (a === "commit") { const q = $("#q"); if (q && q.value.trim()) { S.text = ""; addValues(splitRaw(q.value)); } focusInput(); return; }
     if (a === "coach-ok") return dismissCoach();
     if (a === "export") return toast(`Выгрузка ${results().length} ${plural(results().length,"заказа","заказов","заказов")} в XLSX`);
     if (a === "cols") return toast("Настройка колонок таблицы");
@@ -755,6 +839,11 @@ document.addEventListener("click", e => {
   if (S.selectedChip >= 0 && !t.closest("#field")) { S.selectedChip = -1; renderTop(); }
 });
 document.addEventListener("keydown", e => {
+  if (e.target.id === "hsq") {
+    if (e.key === "Enter") { e.preventDefault(); return hsCommit(); }
+    if (e.key === "Escape") { e.preventDefault(); const crit = popFor.slice(3); closePop(); const b = document.getElementById("hs-" + crit); if (b) b.focus(); return; }
+    return;
+  }
   if (e.key === "Enter" && e.target.matches("[data-sort]")) return toggleSort(e.target.dataset.sort);
   if (popFor === "crit" && ["ArrowDown","ArrowUp","Enter","Escape","Tab"].includes(e.key) && (e.target.id === "critBtn" || e.target.id === "q" || e.target.closest("#pop"))) {
     if (e.key === "ArrowDown") { kbdIdx = (kbdIdx + 1) % CRIT_ORDER.length; markKbd(); e.preventDefault(); return; }
@@ -788,6 +877,12 @@ document.addEventListener("keydown", e => {
   if (S.selectedChip >= 0 && e.key.length === 1) { S.selectedChip = -1; renderTop(); $("#q").focus(); }
 });
 document.addEventListener("input", e => {
+  if (e.target.id === "hsq") {
+    const crit = popFor.slice(3), i = e.target;
+    if (crit === "phone" && /^[\d\s()+\-]*$/.test(i.value) && i.selectionStart === i.value.length && !(e.inputType || "").startsWith("delete")) i.value = fmtPhoneTyping(i.value);
+    if (hsErr) { hsErr = ""; $(".hs-field").classList.remove("err"); const h = $("#hsHint"); h.classList.remove("err"); h.innerHTML = "Нажмите <kbd>Enter</kbd>, чтобы найти. Несколько значений — через запятую"; }
+    return;
+  }
   if (e.target.id !== "q") return;
   const q = e.target; let v = q.value;
   const re = CRIT[S.crit].spaceSplit ? /[,;\n\t ]/ : /[,;\n\t]/;
@@ -802,6 +897,7 @@ document.addEventListener("input", e => {
     if (f !== v && atEnd && !(e.inputType || "").startsWith("delete")) { q.value = f; v = f; }
   }
   S.text = v;
+  const fld = $("#field"); if (fld) fld.classList.toggle("typing", !!v.trim());
   if (S.hint && !S.hint.err) { S.hint = null; renderTop(); focusInput(); }
 });
 document.addEventListener("paste", e => {
@@ -827,6 +923,11 @@ addEventListener("resize", () => {
   positionCoach(); updateBp();
 });
 addEventListener("scroll", () => { positionCoach(); }, { passive: true });
+document.addEventListener("scroll", e => {
+  if (!e.target.classList || !e.target.classList.contains("table-scroll")) return;
+  e.target.classList.toggle("scrolled-x", e.target.scrollLeft > 0);
+  if (popFor && popFor.startsWith("hs:") && popAnchor) { const b = document.getElementById("hs-" + popFor.slice(3)); if (b) placePop(b, "hs-pop"); }
+}, { capture: true, passive: true });
 
 function toggleSort(key){ S.sort = S.sort.key === key ? { key, dir: -S.sort.dir } : { key, dir: key === "ts" ? -1 : 1 }; renderResults(); }
 

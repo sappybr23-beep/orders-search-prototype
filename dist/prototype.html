@@ -123,26 +123,24 @@ input { font: inherit; color: inherit; }
 .row:hover > :first-child { background: var(--bg-hover); }
 .table-scroll.scrolled-x .grid > :first-child { box-shadow: 6px 0 10px -6px rgba(53,62,108,.18); }
 kbd { display: inline-flex; align-items: center; height: 20px; padding: 0 6px; border-radius: 6px; background: var(--bg-container); box-shadow: inset 0 0 0 1px var(--divider), 0 1px 0 var(--divider); font: 500 11px/1 var(--font); color: var(--primary); }
-.enter-hint { display: none; align-items: center; gap: 6px; height: 32px; padding: 0 10px; border-radius: 10px; color: var(--secondary); font-size: 12px; white-space: nowrap; flex: none; align-self: flex-start; margin-top: 4px; }
+.enter-hint { display: inline-flex; align-items: center; gap: 6px; height: 32px; padding: 0 6px; border-radius: 10px; color: var(--secondary); font-size: 12px; white-space: nowrap; flex: none; align-self: flex-start; margin-top: 4px; opacity: .5; transition: opacity .15s; }
+.field.typing .enter-hint { opacity: 1; }
 .enter-hint:hover { background: rgba(53,62,108,.06); color: var(--primary); }
 .enter-hint .mob { display: none; }
-.field.typing .enter-hint { display: inline-flex; }
+
 .thead { position: sticky; top: 0; z-index: 2; background: var(--bg-container); box-shadow: 0 4px 10px rgba(53,62,108,.04); }
-.th { min-height: 56px; display: flex; align-items: center; gap: 2px; padding: 0 8px; color: var(--secondary); white-space: nowrap; }
+.th { height: 56px; display: flex; align-items: center; gap: 2px; padding: 0 8px; color: var(--secondary); white-space: nowrap; }
 .th .lbl-t { overflow: hidden; text-overflow: ellipsis; }
 .th.col-search { cursor: text; transition: background .15s, color .15s; }
 .th.col-search:hover { background: var(--bg-hover); color: var(--primary); }
 .th .cnt { min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9px; background: var(--accent); color: #fff; font: 500 11px/18px var(--font); text-align: center; margin-left: 4px; flex: none; }
 .sort-btn { width: 24px; height: 24px; display: inline-flex; align-items: center; justify-content: center; border-radius: 6px; flex: none; cursor: pointer; }
 .sort-btn:hover { background: rgba(53,62,108,.06); }
-.th.editing { position: relative; flex-direction: column; align-items: stretch; justify-content: center; gap: 4px; padding-top: 12px; padding-bottom: 12px; padding-right: 36px; min-height: 84px; background: var(--bg-container); color: var(--secondary); cursor: text; }
+.th.editing { position: relative; height: 56px; min-height: 56px; background: var(--bg-container); color: var(--secondary); cursor: text; box-shadow: inset 0 -2px 0 var(--accent); }
 .th.editing:hover { background: var(--bg-container); }
-.th.editing .cap { font-size: 13px; line-height: 20px; overflow: hidden; text-overflow: ellipsis; }
-.th.editing .colin { display: flex; align-items: center; gap: 6px; min-width: 0; }
-.th.editing input { flex: 1; min-width: 0; border: 0; outline: none; background: transparent; padding: 0; font: 400 15px/24px var(--font); color: var(--primary); caret-color: var(--primary); }
-.th.editing .cerr { font-size: 11px; line-height: 14px; color: var(--error); white-space: normal; }
+.th.editing input { flex: 1; min-width: 0; height: 100%; border: 0; outline: none; background: transparent; padding: 0; font: 400 13px/20px var(--font); color: var(--primary); caret-color: var(--primary); }
+.th.editing.err { box-shadow: inset 0 -2px 0 var(--error); }
 .th.editing.err input { color: var(--error); }
-.th.editing .sort-btn, .th.editing .sort-ico { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); }
 .th:first-child, .td:first-child { padding-left: 16px; }
 .th.r { justify-content: flex-end; }
 .th.sortable { cursor: pointer; }
@@ -243,7 +241,9 @@ mark { background: rgba(84,115,232,.16); color: inherit; border-radius: 3px; pad
   .field input { font-size: 13px; height: 40px; }
   .clear-btn { margin-top: 4px; }
   .enter-hint { padding: 0 8px; }
-  .enter-hint kbd, .enter-hint .desk { display: none; }
+  .enter-hint { display: none; }
+  .field.typing .enter-hint { display: inline-flex; }
+  .enter-hint kbd { display: none; }
   .enter-hint .mob { display: inline; color: var(--accent); font-weight: 600; font-size: 13px; }
   .pop.crit-pop { min-width: 0; }
   .hint { padding: 0 8px; }
@@ -568,7 +568,7 @@ function renderTop(){
             ${c.ph ? `placeholder="${esc(atLimit ? "Достигнут лимит " + LIMIT + " значений" : S.chips.length ? "Добавить ещё" : c.ph)}"` : ""}
             enterkeyhint="search" inputmode="${S.crit === "phone" ? "tel" : S.crit === "order" ? "numeric" : S.crit === "email" ? "email" : "text"}" value="${esc(S.text)}">
         </div>
-        <button class="enter-hint" data-act="commit" tabindex="-1" title="Нажмите Enter, чтобы найти"><kbd>Enter</kbd><span class="desk">чтобы найти</span><span class="mob">Найти</span></button>
+        <button class="enter-hint" data-act="commit" tabindex="-1" title="Нажмите Enter, чтобы найти" aria-label="Найти (Enter)"><kbd>Enter</kbd><span class="mob">Найти</span></button>
         <button class="clear-btn" data-act="clear" aria-label="${S.chips.length || S.text ? "Очистить поиск" : "Закрыть поиск"}" title="${S.chips.length || S.text ? "Очистить" : "Закрыть поиск"}"><span class="mask"></span></button>
       </div>
     </div>
@@ -624,11 +624,9 @@ function renderResults(){
     const sortEl = sortKey ? `<button class="sort-btn" data-sort="${sortKey}" aria-label="Сортировать: ${esc(label)}" tabindex="-1"><img class="ico16 sort" src="data:image/svg+xml;base64,PHN2ZyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyIgd2lkdGg9IjE2IiBoZWlnaHQ9IjE2IiB2aWV3Qm94PSIwIDAgMTYgMTYiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxnIGlkPSJJY29uL1MvU29ydCI+CjxwYXRoIGlkPSJWZWN0b3IiIGQ9Ik0xMS40NDQgMy45OTk5OEMxMS40NDQgMy42MzE3OSAxMS4xNDU1IDMuMzMzMzEgMTAuNzc3MyAzLjMzMzMxQzEwLjQwOTMgMy4zMzM1NSAxMC4xMTA3IDMuNjMxOTQgMTAuMTEwNyAzLjk5OTk4VjExLjI3OTNMOS4wMjY2OCAxMC4xOTUzTDguOTc1OSAxMC4xNDk3QzguNzE0MDUgOS45MzYyNiA4LjMyODAxIDkuOTUxMjYgOC4wODM5NyAxMC4xOTUzQzcuODQwMDQgMTAuNDM5MyA3LjgyNDk2IDEwLjgyNTQgOC4wMzg0IDExLjA4NzJMOC4wODM5NyAxMS4xMzhMMTAuMzA2IDEzLjM2QzEwLjQzMDkgMTMuNDg0OSAxMC42MDA3IDEzLjU1NTIgMTAuNzc3MyAxMy41NTUzQzEwLjk1NDEgMTMuNTU1MyAxMS4xMjM3IDEzLjQ4NSAxMS4yNDg3IDEzLjM2TDEzLjQ3MTMgMTEuMTM4QzEzLjczMTUgMTAuODc3NyAxMy43MzE1IDEwLjQ1NTYgMTMuNDcxMyAxMC4xOTUzQzEzLjIxMSA5LjkzNTA5IDEyLjc4OSA5LjkzNTA5IDEyLjUyODYgMTAuMTk1M0wxMS40NDQgMTEuMjc5M1YzLjk5OTk4WiIgZmlsbD0iI0I0QjhDQiIvPgo8cGF0aCBpZD0iVmVjdG9yXzIiIGQ9Ik01LjY5MzM2IDMuNTI4NDVDNS40NDkyNSAzLjI4NDQ2IDUuMDYzMjQgMy4yNjkyOCA0LjgwMTQzIDMuNDgyODhMNC43NTA2NSAzLjUyODQ1TDIuNTI4NjQgNS43NTA0NkMyLjI2ODMzIDYuMDEwNzcgMi4yNjg0IDYuNDMyODEgMi41Mjg2NCA2LjY5MzE2QzIuNzg5IDYuOTUzNDYgMy4yMTEwMiA2Ljk1MzUgMy40NzEzNSA2LjY5MzE2TDQuNTU1MzQgNS42MDkxOFYxMi44ODg1QzQuNTU1MzQgMTMuMjU2NiA0Ljg1MzkxIDEzLjU1NSA1LjIyMiAxMy41NTUxQzUuNTkwMTQgMTMuNTU1MSA1Ljg4ODY3IDEzLjI1NjYgNS44ODg2NyAxMi44ODg1VjUuNjA4NTNMNi45NzMzIDYuNjkzMTZMNy4wMjM0MyA2LjczOTM5QzcuMjg1MjggNi45NTI5NCA3LjY3MTk0IDYuOTM3MjQgNy45MTYwMSA2LjY5MzE2QzguMTU5ODIgNi40NDkwOCA4LjE3NTA1IDYuMDYyOTkgNy45NjE1OSA1LjgwMTI0TDcuOTE2MDEgNS43NTA0Nkw1LjY5MzM2IDMuNTI4NDVaIiBmaWxsPSIjQjRCOENCIi8+CjwvZz4KPC9zdmc+Cg==" alt=""></button>` : "";
     if (S.col.crit === crit) {
       const c = CRIT[crit];
-      return `<div class="th editing col-search ${sorted ? "sorted" : ""} ${S.col.err ? "err" : ""}" data-col="${crit}" role="columnheader" aria-sort="${sortKey ? ariaSort(sortKey) : "none"}">
-        <span class="cap">${label}${n ? ` · ${n}` : ""}</span>
-        <div class="colin"><input id="colq" type="text" autocomplete="off" spellcheck="false" maxlength="200" enterkeyhint="search" aria-label="Поиск по столбцу «${esc(c.noun)}»"
-          inputmode="${crit === "phone" ? "tel" : crit === "order" ? "numeric" : crit === "email" ? "email" : "text"}" value="${esc(S.col.text)}"><kbd class="ek" title="Нажмите Enter, чтобы найти" ${S.col.text.trim() ? "" : "hidden"}>Enter</kbd></div>
-        ${S.col.err ? `<span class="cerr">${esc(S.col.err)}</span>` : ""}${sortEl}</div>`;
+      return `<div class="th editing col-search ${sorted ? "sorted" : ""} ${S.col.err ? "err" : ""}" data-col="${crit}" role="columnheader" aria-sort="${sortKey ? ariaSort(sortKey) : "none"}" ${S.col.err ? `title="${esc(S.col.err)}"` : ""}>
+        <input id="colq" type="text" autocomplete="off" spellcheck="false" maxlength="200" enterkeyhint="search" aria-label="Поиск по столбцу «${esc(c.noun)}»${S.col.err ? ". " + esc(S.col.err) : ""}" ${S.col.err ? 'aria-invalid="true"' : ""}
+          inputmode="${crit === "phone" ? "tel" : crit === "order" ? "numeric" : crit === "email" ? "email" : "text"}" value="${esc(S.col.text)}">${sortEl}</div>`;
     }
     return `<div class="th col-search ${sorted ? "sorted" : ""}" data-col="${crit}" role="columnheader" tabindex="0" aria-sort="${sortKey ? ariaSort(sortKey) : "none"}" title="Нажмите, чтобы искать по столбцу"><span class="lbl-t">${label}</span>${n ? `<span class="cnt" aria-label="${n} в поиске">${n}</span>` : ""}${sortEl}</div>`;
   };
@@ -891,8 +889,8 @@ document.addEventListener("input", e => {
     const i = e.target;
     if (S.col.crit === "phone" && /^[\d\s()+\-]*$/.test(i.value) && i.selectionStart === i.value.length && !(e.inputType || "").startsWith("delete")) i.value = fmtPhoneTyping(i.value);
     S.col.text = i.value;
-    const th = i.closest(".th"); th.querySelector(".ek").hidden = !i.value.trim();
-    if (S.col.err) { S.col.err = ""; th.classList.remove("err"); const ce = th.querySelector(".cerr"); if (ce) ce.remove(); }
+    const th = i.closest(".th");
+    if (S.col.err) { S.col.err = ""; th.classList.remove("err"); th.removeAttribute("title"); i.removeAttribute("aria-invalid"); }
     return;
   }
   if (e.target.id !== "q") return;
